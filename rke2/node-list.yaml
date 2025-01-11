@@ -2,21 +2,21 @@
 # Role : master / master-member / worker
 
 nodes:
-  - name: m1.local
-    ip: 192.168.122.89
+  - name: node-01.local
+    ip: 192.168.122.22
     role: master
-  - name: w1.local
-    ip: 192.168.122.63
+  - name: node-02.local
+    ip: 192.168.122.201
     role: worker
 
 # SSH 키파일, 마스터노드 명, 마스터노드 IP, 설치 Kubernetes 버전, POD CIDR 설정
 ssh_key: ~/.ssh/id_rsa
-master_hostname: m1.local
-master_ip: 192.168.122.89
+master_hostname: node-01.local
+master_ip: 192.168.122.22
 pod_cidr: 10.244.0.0/16
  
 # kube_version: v1.31.0
-rke2_version: v1.31.0
+rke2_version: v1.29.10
  
 # RKE2 마스터 노드 토큰
 token: test_token

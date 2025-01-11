@@ -1,10 +1,20 @@
 #!/bin/sh
 
+swapoff -a                 
+sed -e '/swap/ s/^#*/#/' -i /etc/fstab  
+
+if [ 0 -ne 0 ];
+then 
+  echo Rocky: DISABLE selinux
+  setenforce 0
+  sed -i --follow-symlinks 's/SELINUX=.*/SELINUX=disabled/g' /etc/sysconfig/selinux
+fi
+
 mkdir -p /etc/rancher/rke2
 cp /root/rke2/scripts/config.yaml /etc/rancher/rke2/
 
 # Install rke2
-curl -sfL https://get.rke2.io |  INSTALL_RKE2_VERSION=v1.31.0+rke2r1 sh -
+curl -sfL https://get.rke2.io |  INSTALL_RKE2_VERSION=v1.29.10+rke2r1 sh -
 systemctl enable rke2-server.service --now
 
 # Install kubectl, helm, k9s
@@ -16,8 +26,7 @@ curl -s -L https://github.com/derailed/k9s/releases/download/v0.32.5/k9s_Linux_a
 mkdir -p /root/.kube && cp /etc/rancher/rke2/rke2.yaml /root/.kube/config
 
 # Install Cilium
-
 helm repo add cilium https://helm.cilium.io/
-helm upgrade --wait -i cilium cilium/cilium --version 1.16.1 -f /root/rke2/cilium/values.yaml -n kube-system
+helm upgrade -i cilium cilium/cilium --version 1.16.5 -f /root/rke2/cilium/values.yaml -n kube-system
 
 #kubectl apply -f /root/rke2/cilium/announce-ip-pool.yaml
