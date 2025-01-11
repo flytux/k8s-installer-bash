@@ -12,7 +12,7 @@ if [ $(echo "\$(cat /etc/*release | grep -i ubuntu | wc -l)" -ne 0) ];
 then
   echo "Ubuntu: Install containerd, socat, conntrack"
   dpkg -i kubeadm/packages/*.deb
-elif [ $(echo "\$(cat /etc/*release | grep -i rocky | wc -l)" -ne 0) ];
+elif [ $(echo "\$(cat /etc/*release | grep -i -E \"rocky|alma\" | wc -l)" -ne 0) ];
 then 
   echo "Rocky: Install containerd, socat, conntrack"
   setenforce 0
