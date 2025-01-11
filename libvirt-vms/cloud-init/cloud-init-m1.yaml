@@ -1,0 +1,24 @@
+
+#cloud-config
+hostname: m1
+fqdn: m1.local
+
+users:
+  # whatever username you like
+  - name: jaehoon
+    # so our user can just sudo without any password
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    # content from /root/.ssh/id_rsa.pub on your host system
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDYlNU+TIgGzvNjinFlLDvP2DHrfk/JP3wEM2uBCV0jINF6ykXZ+5Qzr8ft7Fmr+vImF7SztVTd1pzCR0pSq55SIAE5H8G0YEdmctRchTwtBYnG+hzNKgnLsSP/NHCSwBk4458vJaJiFJAOHykkns/C9Th5HVbTYIRzRKf3z1RwL8fKSYqo0mBOHSTJJCHdD5QDgvJALi/krDvH52Hzc3zRy2yRYYptH89Pmzz/CuRSwmXtNvrCSL/krZWam2BxvCxQBtvd4/mGXrh5dIJgDf5wEHYixboDxNeoU1bmekzmOROKoXivaUtHEVRYlE6ONUKJokqjxfCsUaGDDHonPd8+6p8NL9y8Q6uQylbkFY+U/0LL/7zynQrVPnAbvd9YXBsOHxUpQQ5bWL4DQ1RRRjj/EGpzQSje6KZGRfr+KEL8gpBmrJSJT/gIk8hjOpoSqWr0114v4krmG6B8B+T5VonHCoUltl2m+sLFgurmc1NhbhOriYpQ+yQUnfu8RBMvgxU= root@kw01
+  - name: root
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDYlNU+TIgGzvNjinFlLDvP2DHrfk/JP3wEM2uBCV0jINF6ykXZ+5Qzr8ft7Fmr+vImF7SztVTd1pzCR0pSq55SIAE5H8G0YEdmctRchTwtBYnG+hzNKgnLsSP/NHCSwBk4458vJaJiFJAOHykkns/C9Th5HVbTYIRzRKf3z1RwL8fKSYqo0mBOHSTJJCHdD5QDgvJALi/krDvH52Hzc3zRy2yRYYptH89Pmzz/CuRSwmXtNvrCSL/krZWam2BxvCxQBtvd4/mGXrh5dIJgDf5wEHYixboDxNeoU1bmekzmOROKoXivaUtHEVRYlE6ONUKJokqjxfCsUaGDDHonPd8+6p8NL9y8Q6uQylbkFY+U/0LL/7zynQrVPnAbvd9YXBsOHxUpQQ5bWL4DQ1RRRjj/EGpzQSje6KZGRfr+KEL8gpBmrJSJT/gIk8hjOpoSqWr0114v4krmG6B8B+T5VonHCoUltl2m+sLFgurmc1NhbhOriYpQ+yQUnfu8RBMvgxU= root@kw01
+ssh_pwauth: true
+disable_root: false
+chpasswd:
+  list: |
+    jaehoon:1
+    root:root
+  expire: False
