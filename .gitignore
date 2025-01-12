@@ -1,4 +1,4 @@
 kubelet
-kubeadm
+/kubeadm/**/kubeadm
 kubectl
 *.tar
