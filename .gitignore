@@ -1,0 +1,4 @@
+kubelet
+kubeadm
+kubectl
+*.tar
