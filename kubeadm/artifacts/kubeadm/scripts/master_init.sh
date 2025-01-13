@@ -6,7 +6,7 @@ sysctl -p
 #load kubernetes images
 nerdctl load -i kubeadm/kubernetes/images/kube-v1.31.0.tar
 
-PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+PATH=/usr/local/bin:/root/.vscode-server/cli/servers/Stable-fabdb6a30b49f79a7aba0f2ad9df9b399473380f/server/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 kubeadm init --pod-network-cidr=10.244.0.0/16 --upload-certs --control-plane-endpoint=m1.local:6443 --kubernetes-version v1.31.0 | sed -e '/kubeadm join/,/--certificate-key/!d' | head -n 3 > join_cmd
 # 02 copy kubeconfig
 mkdir -p /root/.kube
