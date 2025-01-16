@@ -1,7 +1,10 @@
 modprobe br_netfilter
-sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/' /etc/sysctl.conf
-sysctl -p
-#echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
+
+sed -i 's/^#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/' /etc/sysctl.d/99-sysctl.conf
+echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
+sysctl --system
+
+echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
 
 #load kubernetes images
 nerdctl load -i kubeadm/kubernetes/images/kube-${kube_version}.tar
@@ -27,3 +30,5 @@ helm upgrade -i traefik kubeadm/kubernetes/charts/traefik-33.2.1.tgz -n kube-sys
 sleep 30
 
 kubectl apply -f $HOME/kubeadm/cilium/announce-ip-pool.yaml
+
+kubectl apply -f /root/kubeadm/kubernetes/charts/metrics.yaml
