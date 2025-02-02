@@ -40,5 +40,12 @@ chpasswd:
     jaehoon:1
     root:root
   expire: False
+
+runcmd:
+  - echo nameserver 8.8.8.8  > /etc/resolv.conf
+  - mkdir -p /etc/NetworkManager/conf.d/
+  - echo -e "[main] \ndns=none" > /etc/NetworkManager/conf.d/90-dns-none.conf
+  - systemctl reload NetworkNanager
+
 EOF
 done

@@ -9,7 +9,7 @@ echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
 #load kubernetes images
 nerdctl load -i kubeadm/kubernetes/images/kube-v1.31.0.tar
 
-PATH=/usr/local/bin:/usr/local/go/bin:/root/.vscode-server/cli/servers/Stable-91fbdddc47bc9c09064bf7acf133d22631cbf083/server/bin/remote-cli:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+PATH=/usr/local/bin:/usr/local/go/bin:/root/.vscode-server/cli/servers/Stable-cd4ee3b1c348a13bafd8f9ad8060705f6d4b9cba/server/bin/remote-cli:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 kubeadm init --pod-network-cidr=10.244.0.0/16 --upload-certs --control-plane-endpoint=node-01.local:6443 --kubernetes-version v1.31.0 | sed -e '/kubeadm join/,/--certificate-key/!d' | head -n 3 > join_cmd
 # 02 copy kubeconfig
 mkdir -p /root/.kube
