@@ -8,9 +8,8 @@ number_of_nodes=$(yq -r ".nodes | length" $file)
 ssh_key=$(yq -r ".ssh_key" $file)
 master_ip=$(yq -r ".master_ip" $file)
 master_hostname=$(yq -r ".master_hostname" $file)
-master_ip=$(yq -r ".master_ip" $file)
-kube_version=$(yq -r ".kube_version" $file)
 rke2_version=$(yq -r ".rke2_version" $file)
+upgrade_rke2_version=$(yq -r ".upgrade_rke2_version" $file)
 pod_cidr=$(yq -r ".pod_cidr" $file)
 token=$(yq -r ".token" $file)
 tls_san=$(yq -r ".tls_san" $file)
@@ -20,9 +19,9 @@ echo "==============================================================="
 echo "number of nodes: " $number_of_nodes
 echo "ssh key file: " $ssh_key
 echo "master ip: " $master_ip
-echo $master_hostname
-echo $master_ip
-echo $kube_version
+echo "master_hostname: " $master_hostname
+echo "installed rke2 version " $rke2_version
+echo "upgrade rke2 version " $upgrade_rke2_version
 echo "==============================================================="
 
 # 노드 정보 읽어서 변수에 할당
@@ -57,6 +56,14 @@ eval "echo \"${master_member_str}\"" > artifacts/rke2/scripts/master_member.sh
 # worker.sh 스크립트 생성
 worker_str=$(cat artifacts/rke2/scripts/worker.tpl)
 eval "echo \"${worker_str}\"" > artifacts/rke2/scripts/worker.sh
+
+# upgrade_master.sh 스크립트 생성
+upgrade_master_str=$(cat artifacts/rke2/scripts/upgrade_master.tpl)
+eval "echo \"${upgrade_master_str}\"" > artifacts/rke2/scripts/upgrade_master.sh
+
+# upgrade_worker.sh 스크립트 생성
+upgrade_worker_str=$(cat artifacts/rke2/scripts/upgrade_worker.tpl)
+eval "echo \"${upgrade_worker_str}\"" > artifacts/rke2/scripts/upgrade_worker.sh
 
 # reset.sh 스크립트 생성
 reset_str=$(cat artifacts/rke2/scripts/reset.tpl)

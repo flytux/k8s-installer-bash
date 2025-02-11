@@ -6,6 +6,9 @@ sed -e '/swap/ s/^#*/#/' -i /etc/fstab
 mkdir -p /etc/rancher/rke2
 cp /root/rke2/scripts/config.yaml /etc/rancher/rke2/
 
+# check role
+echo master > role
+
 # Install rke2
 curl -sfL https://get.rke2.io |  INSTALL_RKE2_VERSION=v1.31.0+rke2r1 sh -
 systemctl enable rke2-server.service --now

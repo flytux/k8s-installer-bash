@@ -15,8 +15,8 @@ do
         echo Wait Master Node Init..
 	sleep 10
 done
-        ssh -i /root/.ssh/id_rsa -o StrictHostKeyChecking=no 192.168.122.235 -- kubeadm token create --print-join-command | sh -
+        ssh -i /root/.ssh/id_rsa -o StrictHostKeyChecking=no 192.168.122.157 -- kubeadm token create --print-join-command | sh -
 
 mkdir -p /root/.kube
-ssh -i /root/.ssh/id_rsa -o StrictHostKeyChecking=no 192.168.122.235 -- cat /etc/kubernetes/admin.conf > /root/.kube/config
+ssh -i /root/.ssh/id_rsa -o StrictHostKeyChecking=no 192.168.122.157 -- cat /etc/kubernetes/admin.conf > /root/.kube/config
 sed -i s/127.0.0.1/{master_ip}/g /root/.kube/config

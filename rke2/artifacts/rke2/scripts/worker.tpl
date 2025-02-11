@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo "worker" > role
+
 mkdir -p /etc/rancher/rke2
 cp $HOME/rke2/scripts/config.yaml /etc/rancher/rke2/
 sed -i '1iserver: https://${master_ip}:9345' /etc/rancher/rke2/config.yaml
