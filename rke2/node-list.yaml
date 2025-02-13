@@ -5,9 +5,9 @@ nodes:
   - name: node-01.local
     ip: 192.168.122.179
     role: master
-  - name: node-02.local
-    ip: 192.168.122.62
-    role: worker
+    #  - name: node-02.local
+    #    ip: 192.168.122.62
+    #    role: worker
 
 # SSH 키파일, 마스터노드 명, 마스터노드 IP, 설치 Kubernetes 버전, POD CIDR 설정
 ssh_key: ~/.ssh/id_rsa
