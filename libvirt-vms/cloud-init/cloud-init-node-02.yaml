@@ -1,6 +1,6 @@
 
 #cloud-config
-hostname: node-02
+hostname: node-02.local
 fqdn: node-02.local
 
 users:

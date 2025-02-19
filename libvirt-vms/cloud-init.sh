@@ -18,7 +18,7 @@ file="./cloud-init/cloud-init-$node.yaml"
 cat > $file << EOF 
 
 #cloud-config
-hostname: $node
+hostname: $node.local
 fqdn: $node.local
 
 users:

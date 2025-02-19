@@ -33,6 +33,7 @@ do
   echo "node ip $c :" ${node_ip[$c]}
   echo "node role $c :" ${node_role[$c]}
   echo "==============================================================="
+
 done
 
 # 기존 설치 스크립트 삭제

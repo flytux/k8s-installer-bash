@@ -2,7 +2,8 @@
 
 #set -x
 #Add k8smaster IP
-echo "${master_ip}    ${master_hostname}" >> /etc/hosts
+echo "${master_ip}     ${master_hostname}" >> /etc/hosts
+echo "${node_ip[1]}    ${node_name[1]}" >> /etc/hosts
 
 # Swap off
 swapoff -a                 
@@ -12,15 +13,16 @@ if [ $(echo "\$(cat /etc/*release | grep -i ubuntu | wc -l)" -ne 0) ];
 then
   echo "Ubuntu: Install containerd, socat, conntrack"
   dpkg -i kubeadm/packages/*.deb
+
 elif [ $(echo "\$(cat /etc/*release | grep -i -E \"rocky|alma\" | wc -l)" -ne 0) ];
 then 
   echo "Rocky: Install containerd, socat, conntrack"
   setenforce 0
   sed -i --follow-symlinks 's/SELINUX=.*/SELINUX=disabled/g' /etc/sysconfig/selinux
-  #dnf install -y dnf-utils
-  #dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-  #dnf install -y containerd.io socat conntrack iproute-tc iptables-ebtables iptables
-  rpm -Uvh kubeadm/packages/*.rpm --force
+  dnf install -y dnf-utils
+  dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  dnf install -y containerd.io socat conntrack iproute-tc iptables
+  #rpm -Uvh kubeadm/packages/*.rpm --force
 else
   echo "====== Try Ubuntu or Rocky ======"
 fi
@@ -54,3 +56,5 @@ mkdir -p /etc/systemd/system/kubelet.service.d
 
 systemctl daemon-reload
 systemctl enable kubelet --now
+
+
