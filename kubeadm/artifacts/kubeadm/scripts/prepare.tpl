@@ -12,7 +12,11 @@ sed -e '/swap/ s/^#*/#/' -i /etc/fstab
 if [ $(echo "\$(cat /etc/*release | grep -i ubuntu | wc -l)" -ne 0) ]; 
 then
   echo "Ubuntu: Install containerd, socat, conntrack"
-  dpkg -i kubeadm/packages/*.deb
+  # dpkg -i kubeadm/packages/*.deb
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu \$\(lsb_release -cs\) stable"
+  sudo apt-get update
+  sudo apt-get install -y containerd.io
 
 elif [ $(echo "\$(cat /etc/*release | grep -i -E \"rocky|alma\" | wc -l)" -ne 0) ];
 then 
@@ -31,16 +35,17 @@ fi
 mkdir -p /etc/containerd
 cp kubeadm/packages/config.toml /etc/containerd/
 
+systemctl restart containerd
+systemctl enable containerd 
+
 mkdir -p /etc/nerdctl
 cp kubeadm/kubernetes/config/nerdctl.toml /etc/nerdctl/nerdctl.toml
 
-systemctl enable containerd --now
-
 # Copy network binaries
-cp kubeadm/kubernetes/bin/* /usr/local/bin
+cp -r kubeadm/kubernetes/bin/* /usr/local/bin
 
 # Copy kubernetes binaries
-cp kubeadm/kubernetes/bin/${kube_version}/* /usr/local/bin
+cp -r kubeadm/kubernetes/bin/${kube_version}/* /usr/local/bin
 
 chmod +x /usr/local/bin/*
 cp -R kubeadm/cni /opt

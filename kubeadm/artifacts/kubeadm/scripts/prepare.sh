@@ -2,8 +2,8 @@
 
 #set -x
 #Add k8smaster IP
-echo 192.168.122.51 node-01.local >> /etc/hosts
-echo 192.168.122.133 node-02.local >> /etc/hosts
+echo 192.168.122.5 node-01.local >> /etc/hosts
+echo 192.168.122.226 node-02.local >> /etc/hosts
 
 # Swap off
 swapoff -a                 
@@ -12,7 +12,11 @@ sed -e '/swap/ s/^#*/#/' -i /etc/fstab
 if [ $(cat /etc/*release | grep -i ubuntu | wc -l) -ne 0 ]; 
 then
   echo Ubuntu: Install containerd, socat, conntrack
-  dpkg -i kubeadm/packages/*.deb
+  # dpkg -i kubeadm/packages/*.deb
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  sudo add-apt-repository deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable
+  sudo apt-get update
+  sudo apt-get install -y containerd.io
 
 elif [ $(cat /etc/*release | grep -i -E "rocky|alma" | wc -l) -ne 0 ];
 then 
@@ -31,16 +35,17 @@ fi
 mkdir -p /etc/containerd
 cp kubeadm/packages/config.toml /etc/containerd/
 
+systemctl restart containerd
+systemctl enable containerd 
+
 mkdir -p /etc/nerdctl
 cp kubeadm/kubernetes/config/nerdctl.toml /etc/nerdctl/nerdctl.toml
 
-systemctl enable containerd --now
-
 # Copy network binaries
-cp kubeadm/kubernetes/bin/* /usr/local/bin
+cp -r kubeadm/kubernetes/bin/* /usr/local/bin
 
 # Copy kubernetes binaries
-cp kubeadm/kubernetes/bin/v1.31.0/* /usr/local/bin
+cp -r kubeadm/kubernetes/bin/v1.31.0/* /usr/local/bin
 
 chmod +x /usr/local/bin/*
 cp -R kubeadm/cni /opt
