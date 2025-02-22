@@ -24,3 +24,5 @@
 
 - Install Kubeadm 2 node cluster
 <a href="https://asciinema.org/a/07UJgPgGwkKdEtgRNxkU4JKY4" target="_blank"><img src="https://asciinema.org/a/07UJgPgGwkKdEtgRNxkU4JKY4.svg" width="1024" /></a>
+- Upgrade kubeadm to v1.32.1
+[![asciicast](https://asciinema.org/a/XCl8UKzoKgz6emarHJEN1d88R.svg)](https://asciinema.org/a/XCl8UKzoKgz6emarHJEN1d88R)
