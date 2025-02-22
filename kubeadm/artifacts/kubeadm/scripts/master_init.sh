@@ -9,7 +9,7 @@ echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
 #load kubernetes images
 #nerdctl load -i kubeadm/kubernetes/images/kube-v1.31.0.tar
 
-PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
 kubeadm init --pod-network-cidr=10.244.0.0/16 --upload-certs --control-plane-endpoint=node-01.local:6443 --kubernetes-version v1.31.0 | sed -e '/kubeadm join/,/--certificate-key/!d' | head -n 3 > join_cmd
 # 02 copy kubeconfig
 mkdir -p /root/.kube

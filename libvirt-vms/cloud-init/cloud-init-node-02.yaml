@@ -11,10 +11,10 @@ users:
     shell: /bin/bash
     # content from /root/.ssh/id_rsa.pub on your host system
     ssh_authorized_keys:
-      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOAxc0T1e3z9wKNuMCgjnGhqykSOh79hzaMfqWfKjuTT root@kw01-home
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDK/icch8u573Dwex9QRwVtLMAtNILVMBaevt+JFQlWP root@kw01-local
   - name: root
     ssh_authorized_keys:
-      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOAxc0T1e3z9wKNuMCgjnGhqykSOh79hzaMfqWfKjuTT root@kw01-home
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDK/icch8u573Dwex9QRwVtLMAtNILVMBaevt+JFQlWP root@kw01-local
 ssh_pwauth: true
 disable_root: false
 chpasswd:

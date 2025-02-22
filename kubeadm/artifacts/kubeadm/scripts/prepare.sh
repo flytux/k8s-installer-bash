@@ -2,7 +2,7 @@
 
 #set -x
 #Add k8smaster IP
-echo 192.168.122.114 node-01.local >> /etc/hosts
+echo 192.168.122.182 node-01.local >> /etc/hosts
 echo 192.168.122.183 node-02.local >> /etc/hosts
 
 # Swap off
