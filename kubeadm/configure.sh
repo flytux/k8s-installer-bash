@@ -10,15 +10,17 @@ master_ip=$(yq -r ".master_ip" $file)
 master_hostname=$(yq -r ".master_hostname" $file)
 master_ip=$(yq -r ".master_ip" $file)
 kube_version=$(yq -r ".kube_version" $file)
+kube_upgrade_version=$(yq -r ".kube_upgrade_version" $file)
 pod_cidr=$(yq -r ".pod_cidr" $file)
 
 echo "==============================================================="
 echo "number of nodes: " $number_of_nodes
 echo "ssh key file: " $ssh_key
 echo "master ip: " $master_ip
-echo $master_hostname
-echo $master_ip
-echo $kube_version
+echo "master hostname: " $master_hostname
+echo "master ip: " $master_ip
+echo "kube version: " $kube_version
+echo "kube upgrade version: " $kube_upgrade_version
 echo "==============================================================="
 
 # 노드 정보 읽어서 변수에 할당
@@ -55,6 +57,10 @@ eval "echo \"${master_member_str}\"" > artifacts/kubeadm/scripts/master_member.s
 worker_str=$(cat artifacts/kubeadm/scripts/worker.tpl)
 eval "echo \"${worker_str}\"" > artifacts/kubeadm/scripts/worker.sh
 
+# upgrade.sh 스크립트 생성
+upgrade_str=$(cat artifacts/kubeadm/scripts/upgrade.tpl)
+eval "echo \"${upgrade_str}\"" > artifacts/kubeadm/scripts/upgrade.sh
+#
 # reset.sh 스크립트 생성
 reset_str=$(cat artifacts/kubeadm/scripts/reset.tpl)
 eval "echo \"${reset_str}\"" > artifacts/kubeadm/scripts/reset.sh

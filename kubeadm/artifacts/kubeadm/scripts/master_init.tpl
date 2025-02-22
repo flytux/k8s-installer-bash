@@ -7,7 +7,7 @@ sysctl --system
 echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
 
 #load kubernetes images
-nerdctl load -i kubeadm/kubernetes/images/kube-${kube_version}.tar
+#nerdctl load -i kubeadm/kubernetes/images/kube-${kube_version}.tar
 
 PATH=/usr/local/bin:$PATH
 kubeadm init --pod-network-cidr=${pod_cidr} --upload-certs --control-plane-endpoint=${master_hostname}:6443 --kubernetes-version ${kube_version} | \

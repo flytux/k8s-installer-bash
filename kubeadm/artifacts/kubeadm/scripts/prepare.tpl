@@ -61,5 +61,3 @@ mkdir -p /etc/systemd/system/kubelet.service.d
 
 systemctl daemon-reload
 systemctl enable kubelet --now
-
-

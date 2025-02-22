@@ -4,7 +4,7 @@
 # 설정 가져오기
 source configure.sh
 
-(cd artifacts/kubeadm/kubernetes/bin/v1.31.0 && bash download_kubernetes.sh)
+(cd artifacts/kubeadm/kubernetes/bin/${kube_version} && bash download_kubernetes.sh)
 
 # 설치 파일, SSH키, 복사 후 마스터 노드 설치 수행
 for (( c=0 ; c < number_of_nodes; c++)); 
