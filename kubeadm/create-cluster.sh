@@ -16,7 +16,7 @@ do
   eval "$(echo "ssh -i ${ssh_key} root@${node_ip[$c]} chmod +x kubeadm/scripts/*.sh")"
 
   # 컨테이너디, Kubelet 설치
-  echo "====== INSTALLING CONTAIND, KUBELETS ======"
+  echo "====== INSTALLING CONTAINERD, KUBELETS ======"
   eval "$(echo "ssh -i ${ssh_key} root@${node_ip[$c]} kubeadm/scripts/prepare.sh")"
 
   # 마스터 노드 설치
