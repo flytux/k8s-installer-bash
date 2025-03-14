@@ -1,3 +1,4 @@
+if systemctl is-active --quiet kubelet.service ; then   echo kubelet running; exit 1; fi
 # 01 init cluster
 modprobe br_netfilter
 echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
@@ -7,12 +8,12 @@ sysctl --system
 
 chmod 400 /root/.ssh/id_rsa
 
-until [ $(ssh -i /root/.ssh/id_rsa -o StrictHostKeyChecking=no 192.168.122.182 -- cat join_cmd | wc -l) != 0 ];
+until [ $(ssh -i /root/.ssh/id_rsa -o StrictHostKeyChecking=no 192.168.122.171 -- cat join_cmd | wc -l) != 0 ];
 do
         echo Wait Master Node Init..
 	sleep 10
 done
-        ssh -i /root/.ssh/id_rsa -o StrictHostKeyChecking=no 192.168.122.182 -- cat join_cmd | sh -
+        ssh -i /root/.ssh/id_rsa -o StrictHostKeyChecking=no 192.168.122.171 -- cat join_cmd | sh -
 
 # 02 copy kubeconfig
 mkdir -p /root/.kube

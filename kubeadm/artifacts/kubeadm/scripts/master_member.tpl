@@ -1,3 +1,4 @@
+if systemctl is-active --quiet "kubelet.service" ; then   echo "kubelet running"; exit 1; fi
 # 01 init cluster
 modprobe br_netfilter
 echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward

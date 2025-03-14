@@ -1,3 +1,5 @@
+if systemctl is-active --quiet "kubelet.service" ; then   echo "kubelet running"; exit 1; fi
+
 modprobe br_netfilter
 
 sed -i 's/^#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/' /etc/sysctl.d/99-sysctl.conf
@@ -31,4 +33,4 @@ sleep 30
 
 kubectl apply -f $HOME/kubeadm/cilium/announce-ip-pool.yaml
 
-kubectl apply -f /root/kubeadm/kubernetes/charts/metrics.yaml
+#kubectl apply -f /root/kubeadm/kubernetes/charts/metrics.yaml
