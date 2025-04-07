@@ -11,13 +11,13 @@ chmod 400 /root/.ssh/id_rsa
 # Rocky linux 
 #dnf install -y socat conntrack
 
-until [ $(ssh -i /root/.ssh/id_rsa -o StrictHostKeyChecking=no 192.168.122.171 -- cat join_cmd | wc -l) != 0 ];
+until [ $(ssh -i /root/.ssh/id_rsa -o StrictHostKeyChecking=no 192.168.122.94 -- cat join_cmd | wc -l) != 0 ];
 do
         echo Wait Master Node Init..
 	sleep 10
 done
-        ssh -i /root/.ssh/id_rsa -o StrictHostKeyChecking=no 192.168.122.171 -- kubeadm token create --print-join-command | sh -
+        ssh -i /root/.ssh/id_rsa -o StrictHostKeyChecking=no 192.168.122.94 -- kubeadm token create --print-join-command | sh -
 
 mkdir -p /root/.kube
-ssh -i /root/.ssh/id_rsa -o StrictHostKeyChecking=no 192.168.122.171 -- cat /etc/kubernetes/admin.conf > /root/.kube/config
+ssh -i /root/.ssh/id_rsa -o StrictHostKeyChecking=no 192.168.122.94 -- cat /etc/kubernetes/admin.conf > /root/.kube/config
 sed -i s/127.0.0.1/{master_ip}/g /root/.kube/config

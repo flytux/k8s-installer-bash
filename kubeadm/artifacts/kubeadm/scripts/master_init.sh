@@ -12,14 +12,14 @@ echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
 #nerdctl load -i kubeadm/kubernetes/images/kube-v1.31.0.tar
 
 PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
-kubeadm init --pod-network-cidr=10.244.0.0/16 --upload-certs --control-plane-endpoint=node-01.local:6443 --kubernetes-version v1.31.0 | sed -e '/kubeadm join/,/--certificate-key/!d' | head -n 3 > join_cmd
+kubeadm init --pod-network-cidr=10.244.0.0/16 --upload-certs --control-plane-endpoint=k8s-master:6443 --kubernetes-version v1.31.0 | sed -e '/kubeadm join/,/--certificate-key/!d' | head -n 3 > join_cmd
 # 02 copy kubeconfig
 mkdir -p /root/.kube
 cp -ru /etc/kubernetes/admin.conf /root/.kube/config
 chown 0:0 /root/.kube/config
 
 # 03 install cni
-kubectl taint nodes node-01.local node-role.kubernetes.io/control-plane:NoSchedule-
+kubectl taint nodes k8s-master node-role.kubernetes.io/control-plane:NoSchedule-
 
 #helm repo add cilium https://helm.cilium.io/
 helm upgrade -i cilium kubeadm/kubernetes/charts/cilium-1.16.5.tgz -f /root/kubeadm/cilium/values.yaml -n kube-system

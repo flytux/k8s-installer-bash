@@ -18,6 +18,8 @@ do
 done
         ssh -i $HOME/.ssh/id_rsa -o StrictHostKeyChecking=no ${master_ip} -- kubeadm token create --print-join-command | sh -
 
+mkdir -p /etc/kubernetes/manifests
+
 mkdir -p $HOME/.kube
 ssh -i $HOME/.ssh/id_rsa -o StrictHostKeyChecking=no ${master_ip} -- cat /etc/kubernetes/admin.conf > $HOME/.kube/config
 sed -i "s/127\.0\.0\.1/{master_ip}/g" $HOME/.kube/config
