@@ -33,4 +33,4 @@ sleep 30
 
 kubectl apply -f $HOME/kubeadm/cilium/announce-ip-pool.yaml
 
-#kubectl apply -f /root/kubeadm/kubernetes/charts/metrics.yaml
+kubectl apply -f $HOME/kubeadm/kubernetes/charts/metrics.yaml
