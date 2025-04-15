@@ -1,6 +1,14 @@
 #!/bin/bash
 #set -x
 
+# SSH key 설정
+cat << EOF | tee -a $HOME/.ssh/config
+
+Host 192.168.122.*
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
+EOF
+
 # 설정 가져오기
 source configure.sh
 
