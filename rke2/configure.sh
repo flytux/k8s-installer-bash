@@ -68,3 +68,8 @@ eval "echo \"${upgrade_worker_str}\"" > artifacts/rke2/scripts/upgrade_worker.sh
 # reset.sh 스크립트 생성
 reset_str=$(cat artifacts/rke2/scripts/reset.tpl)
 eval "echo \"${reset_str}\"" > artifacts/rke2/scripts/reset.sh
+
+
+# rotate_certs.sh 스크립트 생성
+rotate_certs_str=$(cat artifacts/rke2/scripts/rotate_certs.tpl)
+eval "echo \"${rotate_certs_str}\"" > artifacts/rke2/scripts/rotate_certs.sh
