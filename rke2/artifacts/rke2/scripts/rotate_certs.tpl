@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 허용된 IP 목록 (필요한 만큼 추가)
-MASTER_IPS=( "${master_ip}" )
+MASTER_IPS=( \"${master_ip}\" )
 
 # 현재 호스트의 IP 얻기
 HOST_IP=\$(ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
@@ -19,17 +19,17 @@ done
 
 # 조건에 따라 동작 수행
 if [ "\$IS_MASTER" = true ]; then
-    echo "Master Node 인증서를 갱신합니다."
-    # 실행할 명령어 또는 스크립트
+    echo \"Master Node 인증서를 갱신합니다.\"
+    # stop, rotate, restart rke2 server
     systemctl stop rke2-server
     rke2 certificate rotate
     systemctl start rke2-server
     rke2 certificate check
 else
-    echo "Worker Node 인증서를 갱신합니다."
+    echo \"Worker Node 인증서를 갱신합니다.\"
+    # stop, rotate, restart rke2 agent
     systemctl stop rke2-agent
     rke2 certificate rotate
     systemctl start rke2-agent
     rke2 certificate check
 fi
-
