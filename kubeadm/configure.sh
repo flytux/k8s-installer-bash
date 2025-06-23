@@ -1,22 +1,22 @@
 #!/bin/bash
 #set -x
 
-YAML_FILE="./node-list.yaml"
+yaml_file="./node-list.yaml"
 
 # 설치 YAML 읽어서 변수 할당
-number_of_nodes=$(yq -r ".nodes | length" $YAML_FILE)
-ssh_key=$(yq -r ".ssh_key" $YAML_FILE)
-master_ip=$(yq -r ".master_ip" $YAML_FILE)
-master_hostname=$(yq -r ".master_hostname" $YAML_FILE)
-master_node_name=$(yq -r ".master_node_name" $YAML_FILE)
-backup_location=$(yq -r ".backup_location" $YAML_FILE)
-master_ip=$(yq -r ".master_ip" $YAML_FILE)
-kube_version=$(yq -r ".kube_version" $YAML_FILE)
-kube_upgrade_version=$(yq -r ".kube_upgrade_version" $YAML_FILE)
-pod_cidr=$(yq -r ".pod_cidr" $YAML_FILE)
+number_of_nodes=$(yq -r ".nodes | length" $yaml_file)
+ssh_key=$(yq -r ".ssh_key" $yaml_file)
+master_ip=$(yq -r ".master_ip" $yaml_file)
+master_hostname=$(yq -r ".master_hostname" $yaml_file)
+master_node_name=$(yq -r ".master_node_name" $yaml_file)
+backup_location=$(yq -r ".backup_location" $yaml_file)
+master_ip=$(yq -r ".master_ip" $yaml_file)
+kube_version=$(yq -r ".kube_version" $yaml_file)
+kube_upgrade_version=$(yq -r ".kube_upgrade_version" $yaml_file)
+pod_cidr=$(yq -r ".pod_cidr" $yaml_file)
 
 echo "==============================================================="
-echo "number of nodes: " $NUMBER_OF_NODES
+echo "number of nodes: " $number_of_nodes
 echo "ssh key YAML_FILE: " $ssh_key
 echo "master ip: " $master_ip
 echo "master hostname: " $master_hostname $master_node_name
@@ -28,9 +28,9 @@ echo "==============================================================="
 # 노드 정보 읽어서 변수에 할당
 for (( c=0; c < $number_of_nodes; c++))
 do 
-  node_name[$c]=$(yq -r ".nodes[$c].name" $YAML_FILE)
-  node_ip[$c]=$(yq -r ".nodes[$c].ip" $YAML_FILE)
-  node_role[$c]=$(yq -r ".nodes[$c].role" $YAML_FILE)
+  node_name[$c]=$(yq -r ".nodes[$c].name" $yaml_file)
+  node_ip[$c]=$(yq -r ".nodes[$c].ip" $yaml_file)
+  node_role[$c]=$(yq -r ".nodes[$c].role" $yaml_file)
 
   echo "==============================================================="
   echo "node name $c :" ${node_name[$c]}
@@ -41,31 +41,32 @@ do
 done
 
 # yq를 사용해 YAML 파일 파싱
-mapfile -t NODE_LIST < <(yq e '.nodes[] | [.name, .ip, .role] | @tsv' "$YAML_FILE")
+# 예시 배열
+initial_cluster=""
+is_cluster_member=false
 
-for NODE_ENTRY in "${NODE_LIST[@]}"; do 
-  echo $NODE_ENTRY
-  IFS=$'\t' read -r NODE_NAME NODE_IP NODE_ROLE <<< "$NODE_ENTRY"
+for ((i=0; i<${#node_name[@]}; i++)); do
+  n_name=${node_name[$i]}
+  n_ip=${node_ip[$i]}
+  n_role=${node_role[$i]}
 
-  # 마스터 계열 노드만 initial-cluster 에 포함
-  if [[ "$NODE_ROLE" == master* ]]; then
-    ENTRY="${NODE_NAME}=https://${NODE_IP}:2380"
+  # 디버깅 출력
+  echo "Processing: $n_name $n_ip $n_role"
 
-    if [[ -z "$INITIAL_CLUSTER" ]]; then
-      INITIAL_CLUSTER="$ENTRY"
+  # 마스터 계열 노드만 포함
+  if [[ "$n_role" == master* ]]; then
+    entry="${n_name}=https://${n_ip}:2380"
+
+    if [[ -z "$initial_cluster" ]]; then
+      initial_cluster="$entry"
     else
-      INITIAL_CLUSTER="${INITIAL_CLUSTER},$ENTRY"
+      initial_cluster="${initial_cluster},$entry"
     fi
 
-    # 현재 노드가 클러스터 멤버인지 확인
-    if [[ "$HOST_IP" == "$NODE_IP" || "$HOST_NAME" == "$NODE_NAME" ]]; then
-      IS_CLUSTER_MEMBER=true
-    fi
   fi
 done
-echo $INITIAL_CLUSTER
 
-initial_cluster=$INITIAL_CLUSTER
+echo "initial_cluster = $initial_cluster"
 
 # 기존 설치 스크립트 삭제
 rm -rf artifacts/kubeadm/scripts/*.sh

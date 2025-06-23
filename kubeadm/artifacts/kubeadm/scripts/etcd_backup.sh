@@ -23,7 +23,7 @@ echo ===== ETCD MEMBERS =====
 etcdctl member list -w table
 
 echo ===== CREATING ETCD SNAPSHOTS =====
-etcdctl snapshot save ${BACKUP_LOCATION}/etcd-20250620_083435
+etcdctl snapshot save ${BACKUP_LOCATION}/etcd-20250623_054701
 
 else
   echo [-] 이 노드는 마스터가 아니므로 etcd 백업을 생략합니다.
