@@ -1,5 +1,5 @@
 token: test_token
 tls-san:
-  - k8smaster
+  - k8s-master
 cni: none
 #disable: rke2-ingress-nginx

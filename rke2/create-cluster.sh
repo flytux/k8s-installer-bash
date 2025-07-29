@@ -4,6 +4,8 @@
 # 설정 가져오기
 source configure.sh
 
+(cd artifacts/rke2/rke2/bin/${rke2_version} && bash download_rke2.sh)
+
 # 설치 파일, SSH키, 복사 후 마스터 노드 설치 수행
 for (( c=0 ; c < number_of_nodes; c++)); 
 do
