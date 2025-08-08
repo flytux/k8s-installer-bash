@@ -12,6 +12,9 @@ echo master > role
 # Install rke2
 #curl -sfL https://get.rke2.io |  INSTALL_RKE2_VERSION=v1.33.1+rke2r1 sh -
 
+# Install rpms
+rpm -Uvh /root/rke2/rpms/*.rpm
+
 INSTALL_RKE2_ARTIFACT_PATH=/root/rke2/rke2/bin/v1.33.1 sh /root/rke2/rke2/bin/v1.33.1/install.sh
 
 systemctl enable rke2-server.service --now
