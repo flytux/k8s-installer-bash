@@ -1,6 +1,6 @@
 #!/bin/bash
 set -x
-MASTER_IP=192.168.122.26
+MASTER_IP=192.168.122.2
 MASTER_NAME=node-01.local
 
 HOST_IP=$(hostname -I | awk '{print $1}')
@@ -8,7 +8,7 @@ HOST_NAME=$(hostname)
 
 BACKUP_LOCATION=/root/etcd-backup
 
-INITIAL_CLUSTER=node-01.local=https://192.168.122.26:2380,node-02.local=https://192.168.122.120:2380
+INITIAL_CLUSTER=node-01.local=https://192.168.122.2:2380,node-02.local=https://192.168.122.90:2380
 
 export ETCDCTL_API=3
 export ETCDCTL_ENDPOINTS=https://${HOST_IP}:2379

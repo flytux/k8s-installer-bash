@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 허용된 IP 목록 (필요한 만큼 추가)
-MASTER_IPS=( "192.168.122.2" )
+MASTER_IPS=( "192.168.122.56" )
 
 # 현재 호스트의 IP 얻기
 HOST_IP=$(ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')

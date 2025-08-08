@@ -2,6 +2,8 @@ kubelet
 kubectl
 kubeadm/artifacts/kubeadm/kubernetes/bin/
 *.tar
+*.zst
+*.gz
 !*.yaml
 !*.tpl
 !*.sh

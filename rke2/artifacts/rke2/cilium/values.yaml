@@ -10,3 +10,11 @@ externalIPs:
 operator:
   replicas: 1  # Uncomment this if you only have one node
   rollOutPods: true
+  image:
+    useDigest: false
+envoy:
+  image:
+    useDigest: false
+
+image:
+  useDigest: false

@@ -3,16 +3,16 @@
 
 nodes:
   - name: node-01.local
-    ip: 192.168.122.26
+    ip: 192.168.122.2
     role: master
   - name: node-02.local
-    ip: 192.168.122.120
+    ip: 192.168.122.90
     role: master-member
 
 # SSH 키파일, 마스터노드 명, 마스터노드 IP, 설치 Kubernetes 버전, POD CIDR 설정
 ssh_key: ~/.ssh/id_rsa
 master_hostname: k8s-master
-master_ip: 192.168.122.26
+master_ip: 192.168.122.2
 master_node_name: node-01.local
 backup_location: /root/etcd-backup
 kube_version: v1.31.0
