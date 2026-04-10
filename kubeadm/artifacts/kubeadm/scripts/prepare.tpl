@@ -23,10 +23,10 @@ then
   echo "Rocky: Install containerd, socat, conntrack"
   setenforce 0
   sed -i --follow-symlinks 's/SELINUX=.*/SELINUX=disabled/g' /etc/sysconfig/selinux
-  dnf install -y dnf-utils
-  dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-  dnf install -y containerd.io socat conntrack iproute-tc iptables
-  #rpm -Uvh kubeadm/packages/*.rpm --force
+  #dnf install -y dnf-utils
+  #dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  #dnf install -y containerd.io socat conntrack iproute-tc iptables
+  rpm -Uvh kubeadm/packages/*.rpm --force
 else
   echo "====== Try Ubuntu or Rocky ======"
 fi

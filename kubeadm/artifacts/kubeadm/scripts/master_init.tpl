@@ -22,15 +22,16 @@ chown $(id -u):$(id -g) $HOME/.kube/config
 # 03 install cni
 kubectl taint nodes ${master_hostname} node-role.kubernetes.io/control-plane:NoSchedule-
 
-#helm repo add cilium https://helm.cilium.io/
-helm upgrade -i cilium kubeadm/kubernetes/charts/cilium-1.16.5.tgz -f $HOME/kubeadm/cilium/values.yaml -n kube-system
+kubectl apply -f $HOME/kubeadm/cilium/crd/
 
+helm repo add cilium https://helm.cilium.io/
+helm upgrade -i cilium $HOME/kubeadm/kubernetes/cilium/cilium-1.19.2.tgz -f $HOME/kubeadm/kubernetes/cilium/values.yaml -n kube-system
 
 #helm repo add traefik https://helm.traefik.io/traefik --force-update
-helm upgrade -i traefik kubeadm/kubernetes/charts/traefik-33.2.1.tgz -n kube-system --set ingressRoute.dashboard.enabled=true
+#helm upgrade -i traefik kubeadm/kubernetes/charts/traefik-39.0.7.tgz -n kube-system --set ingressRoute.dashboard.enabled=true
 
 sleep 30
 
-kubectl apply -f $HOME/kubeadm/cilium/announce-ip-pool.yaml
+kubectl apply -f $HOME/kubeadm/kubernetes/cilium/announce-ip-pool.yaml
 
-kubectl apply -f $HOME/kubeadm/kubernetes/charts/metrics.yaml
+kubectl apply -f $HOME/kubeadm/kubernetes/manifests/metrics.yaml

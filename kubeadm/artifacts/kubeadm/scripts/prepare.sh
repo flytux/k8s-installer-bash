@@ -2,8 +2,8 @@
 
 #set -x
 #Add k8smaster IP
-echo 192.168.122.2 k8s-master >> /etc/hosts
-echo 192.168.122.90 node-02.local >> /etc/hosts
+echo 192.168.222.180 k8s-master >> /etc/hosts
+echo   >> /etc/hosts
 
 # Swap off
 swapoff -a                 
@@ -23,10 +23,10 @@ then
   echo Rocky: Install containerd, socat, conntrack
   setenforce 0
   sed -i --follow-symlinks 's/SELINUX=.*/SELINUX=disabled/g' /etc/sysconfig/selinux
-  dnf install -y dnf-utils
-  dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-  dnf install -y containerd.io socat conntrack iproute-tc iptables
-  #rpm -Uvh kubeadm/packages/*.rpm --force
+  #dnf install -y dnf-utils
+  #dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  #dnf install -y containerd.io socat conntrack iproute-tc iptables
+  rpm -Uvh kubeadm/packages/*.rpm --force
 else
   echo ====== Try Ubuntu or Rocky ======
 fi
@@ -45,7 +45,7 @@ cp kubeadm/kubernetes/config/nerdctl.toml /etc/nerdctl/nerdctl.toml
 cp -r kubeadm/kubernetes/bin/* /usr/local/bin
 
 # Copy kubernetes binaries
-cp -r kubeadm/kubernetes/bin/v1.31.0/* /usr/local/bin
+cp -r kubeadm/kubernetes/bin/v1.33.1/* /usr/local/bin
 
 chmod +x /usr/local/bin/*
 cp -R kubeadm/cni /opt

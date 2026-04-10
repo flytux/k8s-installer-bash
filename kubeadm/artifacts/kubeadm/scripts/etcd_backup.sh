@@ -4,7 +4,7 @@ set -x
 HOST_IP=$(hostname -I | awk '{print $1}')
 HOST_NAME=$(hostname)
 
-MASTER_NODE_NAME=node-01.local
+MASTER_NODE_NAME=node-02.local
 
 if [[ $HOST_NAME == $MASTER_NODE_NAME ]]; then
   echo [+] 이 노드는 마스터입니다. etcd 백업을 실행합니다.
@@ -23,7 +23,7 @@ echo ===== ETCD MEMBERS =====
 etcdctl member list -w table
 
 echo ===== CREATING ETCD SNAPSHOTS =====
-etcdctl snapshot save ${BACKUP_LOCATION}/etcd-20250808_134244
+etcdctl snapshot save ${BACKUP_LOCATION}/etcd-20260409_215225
 
 else
   echo [-] 이 노드는 마스터가 아니므로 etcd 백업을 생략합니다.

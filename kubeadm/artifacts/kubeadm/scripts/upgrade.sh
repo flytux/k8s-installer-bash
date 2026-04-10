@@ -1,6 +1,6 @@
 
-NEW_VERSION=v1.32.1
-MASTER_IP=192.168.122.2
+NEW_VERSION=v1.33.1
+MASTER_IP=192.168.222.180
 HOST_IP=$(hostname -I | awk '{print $1}')
 OLD_VERSION=$(/usr/local/bin/kubeadm version | grep -oE 'v([1-9]|\.)+')
 
